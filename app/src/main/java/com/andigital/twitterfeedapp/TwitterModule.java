@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.andigital.twitterfeedapp.presenter.TweetPresenter;
 import com.andigital.twitterfeedapp.presenter.TweetPresenterImpl;
+import com.andigital.twitterfeedapp.rxJava.ObservableConfigurer;
 import com.andigital.twitterfeedapp.service.TweetService;
 import com.andigital.twitterfeedapp.service.TweetServiceImpl;
 
@@ -26,7 +27,7 @@ public class TwitterModule  {
 
     @Provides
     @Singleton
-    public TweetPresenter provideTweetPresenter( TweetService tweetService){
-      return new TweetPresenterImpl(tweetService);
+    public TweetPresenter provideTweetPresenter(TweetService tweetService, ObservableConfigurer observableConfigurer){
+      return new TweetPresenterImpl(tweetService, observableConfigurer);
     }
 }

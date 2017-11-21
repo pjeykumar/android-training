@@ -1,10 +1,11 @@
 package com.andigital.twitterfeedapp.service;
 
+
 import com.andigital.twitterfeedapp.model.Tweet;
 
 import java.util.List;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 
 /**
  * Created by pjeyamukar on 20/11/2017.
@@ -12,5 +13,5 @@ import retrofit2.Call;
 
 public interface TweetService {
 
-    Call<List<Tweet>> getTweets(String listId, int count);
+   Observable<List<Tweet>> getTweets(String listId, int count);
 }

@@ -11,7 +11,7 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {MyAppModule.class,TwitterModule.class, ApiModule.class})
+@Component(modules = {MyAppModule.class,TwitterModule.class, ApiModule.class, RxModule.class})
 public interface MyAppComponent {
     void inject(MainActivity target);
 }

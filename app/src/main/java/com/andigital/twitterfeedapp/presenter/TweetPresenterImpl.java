@@ -1,14 +1,15 @@
 package com.andigital.twitterfeedapp.presenter;
 
 import com.andigital.twitterfeedapp.model.Tweet;
+import com.andigital.twitterfeedapp.rxJava.ObservableConfigurer;
 import com.andigital.twitterfeedapp.service.TweetService;
 import com.andigital.twitterfeedapp.view.TwitterListMVPView;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.observers.DefaultObserver;
 
 /**
  * Created by pjeyamukar on 20/11/2017.
@@ -18,26 +19,44 @@ public class TweetPresenterImpl implements TweetPresenter {
 
     private final TweetService tweetService;
 
+    private ObservableConfigurer observableConfigurer;
+
     private  TwitterListMVPView mvpView;
-    public TweetPresenterImpl(TweetService tweetService) {
+    public TweetPresenterImpl(TweetService tweetService, ObservableConfigurer observableConfigurer) {
         this.tweetService = tweetService;
+        this.observableConfigurer = observableConfigurer;
     }
 
     @Override
     public void getTweetList() {
 
-        Call<List<Tweet>> tweetListCall = tweetService.getTweets(mvpView.getListId(), mvpView.getTweetCount());
-        tweetListCall.enqueue(new Callback<List<Tweet>>() {
+        if (mvpView == null) {
+            return;
+        }
+        Observable<List<Tweet>> tweetListObs = tweetService.getTweets(
+                mvpView.getListId(), mvpView.getTweetCount());
+
+        observableConfigurer.configureObservable(tweetListObs).subscribe(getTweetListObserver());
+    }
+
+    private Observer<List<Tweet>> getTweetListObserver() {
+        DefaultObserver observer = new DefaultObserver() {
             @Override
-            public void onResponse(Call<List<Tweet>> call, Response<List<Tweet>> response) {
-                mvpView.onTweetsLoaded(response.body());
+            public void onNext(Object value) {
+                mvpView.onTweetsLoaded((List<Tweet>) value);
             }
 
             @Override
-            public void onFailure(Call<List<Tweet>> call, Throwable t) {
-                mvpView.onTweetsLoadError(t);
+            public void onError(Throwable e) {
+                mvpView.onTweetsLoadError(e);
             }
-        });
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+        return observer;
     }
 
     @Override

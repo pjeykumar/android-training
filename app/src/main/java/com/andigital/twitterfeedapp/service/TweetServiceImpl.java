@@ -5,7 +5,7 @@ import com.andigital.twitterfeedapp.model.Tweet;
 
 import java.util.List;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 
 /**
  * Created by pjeyamukar on 20/11/2017.
@@ -20,9 +20,9 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public Call<List<Tweet>> getTweets(String listId, int count) {
+    public Observable<List<Tweet>> getTweets(String listId, int count) {
 
-        Call<List<Tweet>> observable =  twitterAPI.getTweets(listId,"extended", 1, count);
+        Observable<List<Tweet>> observable =  twitterAPI.getTweets(listId,"extended", 1, count);
 
         return observable;
 
