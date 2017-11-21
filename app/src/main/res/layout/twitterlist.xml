@@ -43,13 +43,11 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/tweet_body_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/ic_twitter_icon"
-        android:paddingStart="@dimen/twitter_icon_padding"
-        android:paddingEnd="@dimen/twitter_icon_padding"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@id/tweet_body"
+        android:layout_alignStart="@id/tweet_body"
+        android:layout_alignLeft="@id/tweet_body"
         />
 
 

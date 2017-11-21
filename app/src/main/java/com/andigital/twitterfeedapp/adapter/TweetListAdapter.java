@@ -81,7 +81,8 @@ public class TweetListAdapter extends RecyclerView.Adapter<TweetListAdapter.Twee
         public void setData(Tweet data) {
             tweetDate.setText(data.createdAt());
             tweetBody.setText(data.body());
-            twitterIcon.setImageURI(String.valueOf(data.getImageUri()));
+            if(data.getImageUri() != null)
+            twitterIcon.setImageURI(data.getImageUri().getUri());
 
         }
     }
