@@ -31,6 +31,7 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -61,8 +62,6 @@ public class TweetPresenterImplTest {
     public void getTweetlistTest(){
         //given
         Observable<List<Tweet>> observableTweetList = getObservableTweetInstance();
-        given(tweetServiceMock.getTweets(anyString(),anyInt())).willReturn(observableTweetList);
-        when(observableConfigurerMock.configureObservable(observableTweetList)).thenReturn(observableTweetList);
         when(mvpViewTestMock.getListId()).thenReturn(LIST_ID);
         when(mvpViewTestMock.getTweetCount()).thenReturn(COUNT);
 
@@ -72,8 +71,8 @@ public class TweetPresenterImplTest {
         //then
         assertEquals(mvpViewTestMock.getListId(),LIST_ID);
         assertEquals(mvpViewTestMock.getTweetCount(),5);
-        //verify(tweetServiceMock, atLeastOnce()).getTweets(LIST_ID,COUNT);
-        //verify(observableConfigurerMock).configureObservable(observableTweetList);
+        spy(tweetServiceMock).getTweets(LIST_ID,COUNT);
+        spy(observableConfigurerMock).configureObservable(observableTweetList);
 
 
     }
