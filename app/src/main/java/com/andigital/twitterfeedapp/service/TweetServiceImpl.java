@@ -22,7 +22,7 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public Observable<List<Tweet>> getTweets(String listId, int count) {
 
-        Observable<List<Tweet>> observable =  twitterAPI.getTweets(listId,"extended", 1, count);
+        Observable<List<Tweet>> observable =  twitterAPI.get_Tweets(listId,"extended", 1, count);
 
         return observable;
 

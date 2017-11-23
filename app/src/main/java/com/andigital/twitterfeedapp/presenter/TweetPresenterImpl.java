@@ -22,6 +22,7 @@ public class TweetPresenterImpl implements TweetPresenter {
     private ObservableConfigurer observableConfigurer;
 
     private  TwitterListMVPView mvpView;
+
     public TweetPresenterImpl(TweetService tweetService, ObservableConfigurer observableConfigurer) {
         this.tweetService = tweetService;
         this.observableConfigurer = observableConfigurer;
